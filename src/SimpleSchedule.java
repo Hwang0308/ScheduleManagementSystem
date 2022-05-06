@@ -1,16 +1,22 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DetailSchedule extends SimpleSchedule implements Schedule {
-	static ArrayList<DetailSchedule> list = new ArrayList<DetailSchedule>();
+public class SimpleSchedule implements Schedule {
+	static ArrayList<SimpleSchedule> list = new ArrayList<SimpleSchedule>(); //스케줄의 제목, 월, 일을 담을 수 있는 리스트
 	
-	protected int hour;
-	protected int minute;
-	protected int second;
-	protected String text;
+	protected Scanner input;
+	protected String title;
+	protected int month, day;
+
+	public void menu() {
+		System.out.println("1. Simple Schedule");
+		System.out.println("2. Detail Schedule");
+		System.out.println("5. Exit");
+		System.out.println("-----------------------");
+	}
 	
 	public void menuList() {
-		System.out.println("Detail Schedule Manage");
+		System.out.println("Simple Schedule Manage");
 		System.out.println("");
 		System.out.println("1. Add schedule");
 		System.out.println("2. Edit schedule");
@@ -47,36 +53,35 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 	}
 	
 	public String toString() {
-	    return this.title + " " + this.month + " " + this.day + " " + this.hour + " " + this.minute + " " + this.second + " " + this.text;
-	}//String 클래스의 메서드 오버라이딩
+	    return this.title + " " + this.month + " " + this.day;
+	} //String 클래스의 메서드 오버라이딩
 	
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
-	public void setMinute(int minute) {
-		this.minute = minute;
-	}
-	public void setSecond(int second) {
-		this.second = second;
-	}
-	public void setText(String text) {
-		this.text = text;
-	}
-	public int getHour() {
-		return this.hour;
-	}
-	public int getMinute() {
-		return this.minute;
-	}
-	public int getSecond() {
-		return this.second;
-	}
-	public String getText() {
-		return this.text;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
+	public void setMonth(int month) {
+		this.month = month;
+	}
+	
+	public void setDay(int day) {
+		this.day = day;
+	}
+	
+	public String getTitle() {
+		return this.title;
+	}
+	
+	public int getMonth() {
+		return this.month;
+	}
+	
+	public int getDay() {
+		return this.day;
+	}
+
 	public void addSchedule() {
-		DetailSchedule schedule = new DetailSchedule();
+		SimpleSchedule schedule = new SimpleSchedule();
 		
 		System.out.println("Add schedule!");
 		
@@ -91,7 +96,7 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 		if (month < 1 || month > 12) {
 			System.out.println("It's not the correct month.");
 			return;
-		}
+		} //1~12월 사이가 아니면 함수를 종료하는 조건문
 		schedule.setMonth(month);
 		
 		System.out.print("Day?(1 ~ 31) : ");
@@ -100,40 +105,8 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 		if (day < 1 || day > 31) {
 			System.out.println("It's not the correct day.");
 			return;
-		}
+		} //1~31일 사이가 아니면 함수를 종료하는 조건문
 		schedule.setDay(day);
-		
-		System.out.print("Hour?(1 ~ 24) : ");
-		input = new Scanner(System.in);
-		hour = input.nextInt();
-		if (hour < 1 || hour > 24) {
-			System.out.println("It's not the correct hour.");
-			return;
-		}
-		schedule.setHour(hour);
-		
-		System.out.print("Minute?(0 ~ 59) : ");
-		input = new Scanner(System.in);
-		minute = input.nextInt();
-		if (minute < 0 || minute > 59) {
-			System.out.println("It's not the correct minute.");
-			return;
-		}
-		schedule.setMinute(minute);
-		
-		System.out.print("Second?(0 ~ 59) : ");
-		input = new Scanner(System.in);
-		second = input.nextInt();
-		if (second < 0 || second > 59) {
-			System.out.println("It's not the correct second.");
-			return;
-		}
-		schedule.setSecond(second);
-		
-		System.out.print("Text? : ");
-		input = new Scanner(System.in);
-		text = input.nextLine();
-		schedule.setText(text);
 		
 		list.add(schedule);
 		
@@ -141,12 +114,8 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 		System.out.println("Title : " + schedule.getTitle());
 		System.out.println("Month : " + schedule.getMonth());
 		System.out.println("Day : " + schedule.getDay());
-		System.out.println("Hour : " + schedule.getHour());
-		System.out.println("Minute : " + schedule.getMinute());
-		System.out.println("Second : " + schedule.getSecond());
-		System.out.println("Text : " + schedule.getText());
 		System.out.println("");
-	}//Schedule 클래스의 addSchedule() 함수를 오버라이딩 함.
+	}
 	
 	public void editSchedule() {
 		System.out.println("Edit schedule!");
@@ -155,7 +124,7 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 		String t = input.nextLine();
 		
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getTitle().equals(t)) {
+			if (list.get(i).getTitle().equals(t)) { //스케줄의 제목으로 스케줄을 찾아내는 조건문
 				System.out.println("the schedule you want to change is");
 				System.out.println(list.get(i));
 				
@@ -168,7 +137,7 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 				if (month < 1 || month > 12) {
 					System.out.println("It's not the correct month.");
 					return;
-				}
+				} //1~12월 사이가 아니면 함수를 종료하는 조건문
 				list.get(i).setMonth(input.nextInt());
 				
 				System.out.print("Day? : ");
@@ -176,68 +145,31 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 				if (day < 1 || day > 31) {
 					System.out.println("It's not the correct day.");
 					return;
-				}
+				} //1~31일 사이가 아니면 함수를 종료하는 조건문
 				list.get(i).setDay(input.nextInt());
-				
-				System.out.print("Hour? : ");
-				input = new Scanner(System.in);
-				if (hour < 1 || hour > 24) {
-					System.out.println("It's not the correct Hour.");
-					return;
-				}
-				list.get(i).setHour(input.nextInt());
-				
-				System.out.print("Minute? : ");
-				input = new Scanner(System.in);
-				if (minute < 0 || minute > 59) {
-					System.out.println("It's not the correct minute.");
-					return;
-				}
-				list.get(i).setMinute(input.nextInt());
-				
-				System.out.print("Second? : ");
-				input = new Scanner(System.in);
-				if (second < 0 || second > 59) {
-					System.out.println("It's not the correct second.");
-					return;
-				}
-				list.get(i).setSecond(input.nextInt());
-				
-				System.out.print("Text? : ");
-				input = new Scanner(System.in);
-				list.get(i).setText(input.nextLine());
 				
 				System.out.println("Schedle is edit!!");
 				System.out.println("Title : " + list.get(i).getTitle());
 				System.out.println("Month : " + list.get(i).getMonth());
 				System.out.println("Day : " + list.get(i).getDay());
-				System.out.println("Hour : " + list.get(i).getHour());
-				System.out.println("Minute : " + list.get(i).getMinute());
-				System.out.println("Second : " + list.get(i).getSecond());
-				System.out.println("Text : " + list.get(i).getText());
 				
 				return;
 			}
 			else {System.out.println("Find your title....");}
 		}
 		System.out.println("The title name is not exist.");
-	}//Schedule 클래스의 editSchedule() 함수를 오버라이딩 함.
+	}
 
 	public void showSchedule() {
 		System.out.println("Show schedule!");
 		
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println("Schedle is edit!!");
 			System.out.println("Title : " + list.get(i).getTitle());
 			System.out.println("Month : " + list.get(i).getMonth());
 			System.out.println("Day : " + list.get(i).getDay());
-			System.out.println("Hour : " + list.get(i).getHour());
-			System.out.println("Minute : " + list.get(i).getMinute());
-			System.out.println("Second : " + list.get(i).getSecond());
-			System.out.println("Text : " + list.get(i).getText());
 			System.out.println("--------------------------------------------------------------------------------------");
 		}
-	}//Schedule 클래스의 showSchedule() 함수를 오버라이딩 함.
+	}
 	
 	public void deleteSchedule() {
 		System.out.println("Delete schedule!");
@@ -248,14 +180,9 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getTitle().equals(t)) {
 				System.out.println("The schedule you want to delete is ");
-				System.out.println("Schedle is edit!!");
 				System.out.println("Title : " + list.get(i).getTitle());
 				System.out.println("Month : " + list.get(i).getMonth());
 				System.out.println("Day : " + list.get(i).getDay());
-				System.out.println("Hour : " + list.get(i).getHour());
-				System.out.println("Minute : " + list.get(i).getMinute());
-				System.out.println("Second : " + list.get(i).getSecond());
-				System.out.println("Text : " + list.get(i).getText());
 				System.out.println("Are you sure to delete this schedule?");
 				System.out.println("Yes : 1    /    No : 2");
 				input = new Scanner(System.in);
@@ -266,18 +193,18 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 					System.out.println("Successfully deleted!!");
 					
 					return;
-				}
+				}//1을 입력하면 리스트에 데이터를 삭제한다.
 				else if (checkNum == 2) {
 					System.out.println("Do not delete.");
-				}
+				}//2를 입력하면 리스트에 데이터를 삭제하지 않음. 대신, return하지 않음으로 같은 제목의 다른 일정을 찾는다.
 				else {
 					System.out.println("Wrong approach");
 					
 					return;
-				}
+				}//다른 숫자를 입력하면 잘못된 접근으로 아무것도 하지 않고 함수를 종료한다.
 			}
 			else {System.out.println("Find your title....");}
 		}
 		System.out.println("The title name is not exist.");
 	}
-}//Schedule 클래스의 deleteSchedule() 함수를 오버라이딩 함.
+}

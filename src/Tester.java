@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Tester {
 	public static void main(String[] args) {
-		Schedule s = new Schedule();
+		SimpleSchedule s = new SimpleSchedule();
 		DetailSchedule ss = new DetailSchedule();
 		System.out.println("Schedule Magement Program");
 		while (true) {
