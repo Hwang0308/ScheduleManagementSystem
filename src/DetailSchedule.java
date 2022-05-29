@@ -1,14 +1,11 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class DetailSchedule extends SimpleSchedule implements Schedule {
+public class DetailSchedule extends Schedule {
 	static ArrayList<DetailSchedule> list = new ArrayList<DetailSchedule>();
-	
-	protected int hour;
-	protected int minute;
-	protected int second;
-	protected String text;
+	File file = new File();
 	
 	public void menuList() {
 		System.out.println("Detail Schedule Manage");
@@ -20,7 +17,6 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 		System.out.println("5. Exit");
 		System.out.println("-----------------------");
 	}
-	
 	public void menuRun() {
 		try {
 			menuList();
@@ -55,6 +51,16 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 	    return this.title + " " + this.month + " " + this.day + " " + this.hour + " " + this.minute + " " + this.second + " " + this.text;
 	}//String 클래스의 메서드 오버라이딩
 	
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public void setMonth(int month) {
+		this.month = month;
+	}
+	public void setDay(int day) {
+		this.day = day;
+	}
 	public void setHour(int hour) {
 		this.hour = hour;
 	}
@@ -66,6 +72,16 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	
+	public String getTitle() {
+		return this.title;
+	}
+	public int getMonth() {
+		return this.month;
+	}
+	public int getDay() {
+		return this.day;
 	}
 	public int getHour() {
 		return this.hour;
@@ -142,6 +158,7 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 			schedule.setText(text);
 
 			list.add(schedule);
+			file.writeScheduleAdd();
 
 			System.out.println("New Schedule is");
 			System.out.println("Title : " + schedule.getTitle());
@@ -154,9 +171,10 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 			System.out.println("");
 		} catch (InputMismatchException e) {
 			System.out.println("Error! Input int type!");
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
-	}//Schedule 클래스의 addSchedule() 함수를 오버라이딩 함.
-	
+	}
 	public void editSchedule() {
 		try {
 			System.out.println("Edit schedule!");
@@ -216,6 +234,7 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 					System.out.print("Text? : ");
 					input = new Scanner(System.in);
 					list.get(i).setText(input.nextLine());
+					file.writeScheduleEdit();
 
 					System.out.println("Schedle is edit!!");
 					System.out.println("Title : " + list.get(i).getTitle());
@@ -233,25 +252,29 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 			System.out.println("The title name is not exist.");
 		} catch (InputMismatchException e) {
 			System.out.println("Error! Input int type!");
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
-	}//Schedule 클래스의 editSchedule() 함수를 오버라이딩 함.
-
+	}
 	public void showSchedule() {
-		System.out.println("Show schedule!");
-		
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println("Schedle is edit!!");
-			System.out.println("Title : " + list.get(i).getTitle());
-			System.out.println("Month : " + list.get(i).getMonth());
-			System.out.println("Day : " + list.get(i).getDay());
-			System.out.println("Hour : " + list.get(i).getHour());
-			System.out.println("Minute : " + list.get(i).getMinute());
-			System.out.println("Second : " + list.get(i).getSecond());
-			System.out.println("Text : " + list.get(i).getText());
-			System.out.println("--------------------------------------------------------------------------------------");
+		try {
+			System.out.println("Show schedule!");
+
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println("Title : " + list.get(i).getTitle());
+				System.out.println("Month : " + list.get(i).getMonth());
+				System.out.println("Day : " + list.get(i).getDay());
+				System.out.println("Hour : " + list.get(i).getHour());
+				System.out.println("Minute : " + list.get(i).getMinute());
+				System.out.println("Second : " + list.get(i).getSecond());
+				System.out.println("Text : " + list.get(i).getText());
+				System.out.println("--------------------------------------------------------------------------------------");
+			}
+			file.writeScheduleShow();
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
-	}//Schedule 클래스의 showSchedule() 함수를 오버라이딩 함.
-	
+	}
 	public void deleteSchedule() {
 		try {
 			System.out.println("Delete schedule!");
@@ -292,9 +315,12 @@ public class DetailSchedule extends SimpleSchedule implements Schedule {
 				}
 				else {System.out.println("Find your title....");}
 			}
+			file.writeScheduleDelete();
 			System.out.println("The title name is not exist.");
 		} catch (InputMismatchException e) {
 			System.out.println("Error! Input int type!");
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
 	}
-}//Schedule 클래스의 deleteSchedule() 함수를 오버라이딩 함.
+}

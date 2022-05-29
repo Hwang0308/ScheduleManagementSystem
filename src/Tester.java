@@ -2,22 +2,29 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Tester {
+	public static void menu() {
+		System.out.println("1. Simple Schedule");
+		System.out.println("2. Detail Schedule");
+		System.out.println("5. Exit");
+		System.out.println("-----------------------");
+	}
+	
 	public static void main(String[] args) {
-		SimpleSchedule s = new SimpleSchedule();
-		DetailSchedule ss = new DetailSchedule();
+		SimpleSchedule simple = new SimpleSchedule();
+		DetailSchedule detail = new DetailSchedule();
 		System.out.println("Schedule Magement Program");
 		while (true) {
 			try {
-				s.menu();
+				menu();
 
 				Scanner input = new Scanner(System.in);
 				int menu = input.nextInt();
 
 				if (menu == 1) {
-					s.menuRun();
+					simple.menuRun();
 				}
 				else if (menu == 2) {
-					ss.menuRun();
+					detail.menuRun();
 				}
 				else if (menu == 5) {
 					System.out.println("Exit");

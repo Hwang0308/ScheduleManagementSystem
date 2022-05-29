@@ -1,20 +1,11 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public class SimpleSchedule implements Schedule {
+public class SimpleSchedule extends Schedule {
 	static ArrayList<SimpleSchedule> list = new ArrayList<SimpleSchedule>(); //스케줄의 제목, 월, 일을 담을 수 있는 리스트
-	
-	protected Scanner input;
-	protected String title;
-	protected int month, day;
-
-	public void menu() {
-		System.out.println("1. Simple Schedule");
-		System.out.println("2. Detail Schedule");
-		System.out.println("5. Exit");
-		System.out.println("-----------------------");
-	}
+	File file = new File();
 	
 	public void menuList() {
 		System.out.println("Simple Schedule Manage");
@@ -26,7 +17,6 @@ public class SimpleSchedule implements Schedule {
 		System.out.println("5. Exit");
 		System.out.println("-----------------------");
 	}
-	
 	public void menuRun() {
 		try {
 			menuList();
@@ -64,14 +54,13 @@ public class SimpleSchedule implements Schedule {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
 	public void setMonth(int month) {
 		this.month = month;
 	}
-	
 	public void setDay(int day) {
 		this.day = day;
 	}
+	
 	
 	public String getTitle() {
 		return this.title;
@@ -80,11 +69,10 @@ public class SimpleSchedule implements Schedule {
 	public int getMonth() {
 		return this.month;
 	}
-	
 	public int getDay() {
 		return this.day;
 	}
-
+	
 	public void addSchedule() {
 		try {
 			SimpleSchedule schedule = new SimpleSchedule();
@@ -115,6 +103,7 @@ public class SimpleSchedule implements Schedule {
 			schedule.setDay(day);
 
 			list.add(schedule);
+			file.writeScheduleAdd();
 
 			System.out.println("New Schedule is");
 			System.out.println("Title : " + schedule.getTitle());
@@ -123,9 +112,10 @@ public class SimpleSchedule implements Schedule {
 			System.out.println("");
 		} catch (InputMismatchException e) {
 			System.out.println("Error! Input int type!");
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
 	}
-	
 	public void editSchedule() {
 		try {
 			System.out.println("Edit schedule!");
@@ -157,6 +147,7 @@ public class SimpleSchedule implements Schedule {
 						return;
 					} //1~31일 사이가 아니면 함수를 종료하는 조건문
 					list.get(i).setDay(input.nextInt());
+					file.writeScheduleEdit();
 
 					System.out.println("Schedle is edit!!");
 					System.out.println("Title : " + list.get(i).getTitle());
@@ -170,20 +161,25 @@ public class SimpleSchedule implements Schedule {
 			System.out.println("The title name is not exist.");
 		} catch (InputMismatchException e) {
 			System.out.println("Error! Input int type!");
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
 	}
-
 	public void showSchedule() {
-		System.out.println("Show schedule!");
-		
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println("Title : " + list.get(i).getTitle());
-			System.out.println("Month : " + list.get(i).getMonth());
-			System.out.println("Day : " + list.get(i).getDay());
-			System.out.println("--------------------------------------------------------------------------------------");
+		try {
+			System.out.println("Show schedule!");
+			file.writeScheduleShow();
+
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println("Title : " + list.get(i).getTitle());
+				System.out.println("Month : " + list.get(i).getMonth());
+				System.out.println("Day : " + list.get(i).getDay());
+				System.out.println("--------------------------------------------------------------------------------------");
+			}
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
 	}
-	
 	public void deleteSchedule() {
 		try {
 			System.out.println("Delete schedule!");
@@ -219,9 +215,12 @@ public class SimpleSchedule implements Schedule {
 				}
 				else {System.out.println("Find your title....");}
 			}
+			file.writeScheduleDelete();
 			System.out.println("The title name is not exist.");
 		} catch (InputMismatchException e) {
 			System.out.println("Error! Input int type!");
+		} catch (IOException e) {
+			System.out.println("Error! IOException!");
 		}
 	}
 }
