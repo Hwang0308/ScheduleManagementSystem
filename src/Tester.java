@@ -12,9 +12,13 @@ public class Tester {
 	public static void main(String[] args) {
 		SimpleSchedule simple = new SimpleSchedule();
 		DetailSchedule detail = new DetailSchedule();
-		System.out.println("Schedule Magement Program");
+		System.out.println("Schedule Management Program");
 		while (true) {
 			try {
+				Gui m = new Gui();
+				m.guiMenu();
+//				m.guiAddSchedule();
+				
 				menu();
 
 				Scanner input = new Scanner(System.in);

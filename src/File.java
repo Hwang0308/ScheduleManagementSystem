@@ -14,7 +14,7 @@ public class File {
 
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		file.print(format.format(date) + ", Add Schedule");
+		file.println(format.format(date) + ", Add Schedule // ");
 
 		file.close();
 	}
@@ -24,7 +24,7 @@ public class File {
 
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		file.print(format.format(date) + ", Edit Schedule");
+		file.println(format.format(date) + ", Edit Schedule // ");
 
 		file.close();
 	}
@@ -34,7 +34,7 @@ public class File {
 
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		file.print(format.format(date) + ", Delete Schedule");
+		file.println(format.format(date) + ", Delete Schedule // ");
 
 		file.close();
 	}
@@ -44,7 +44,7 @@ public class File {
 
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		file.print(format.format(date) + ", Show Schedule");
+		file.println(format.format(date) + ", Show Schedule // ");
 
 		file.close();
 	}
