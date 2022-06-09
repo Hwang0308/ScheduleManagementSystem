@@ -1,17 +1,30 @@
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public abstract class Schedule {
-	protected JFrame guiMenuFrame, guiAddFrame, guiShowFrame, guiEditFrame1, guiEditFrame2, guiDeleteFrame1, guiDeleteFrame2;
-	protected String titleType, monthType, dayType, hourType, minuteType, secondType, textType;
-	protected JButton add, edit1, edit2, del, show, exit, save, back1, back2, back3, back4, back5, editButton, delButton, OKButton, NOButton;
+	//Gui 클래스에서 사용할 변수 모음
 	protected Gui schedule;
-	protected JTextField titleField, monthField, dayField, hourField, minuteField, secondField, editTitleField, deleteTitleField;
+	protected JFrame guiMenuFrame, guiAddFrame, guiShowFrame, guiEditFrame1, guiEditFrame2, guiDeleteFrame1, guiDeleteFrame2;
+	
+	protected JButton add, edit1, del, show, exit; //guiMenuFrame에서 사용하는 버튼
+	protected JButton save, back1; //guiAddFrame에서 사용하는 버튼
+	protected JButton back2; //guiShowFrame에서 사용하는 버튼
+	protected JButton editButton, back3; //guiEditFrame1에서 사용하는 버튼
+	protected JButton edit2, back4; //guiEditFrame2에서 사용하는 버튼
+	protected JButton delButton, back5; //guiDeleteFrame1에서 사용하는 버튼
+	protected JButton OKButton, NOButton; //guiDeleteFrame2에서 사용하는 버튼
+	
+	protected JTextField titleField, monthField, dayField, hourField, minuteField, secondField, editTitleField, deleteTitleField; //스케줄의 정보를 타이핑할 수 있는 텍스트필드
 	protected JTextArea textArea;
-	protected int i;
-
+	
+	protected String titleType, monthType, dayType, hourType, minuteType, secondType, textType; //스케줄의 정보를 담기 위한 변수
+	protected int i; //ArrayList list변수의 배열 순서를 담기 위한 변수
+	
+	//Gui 클래스에서 사용할 메서드 모음
 	public abstract String toString();
 	
 	public abstract void setTitleType(String titleType);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Gui extends Schedule implements ActionListener {
 	static ArrayList<Gui> list = new ArrayList<Gui>();
+	Loader load = new Loader();
 	
 	public String toString() {
 	    return this.titleType + " " + this.monthType + " " + this.dayType + " " + this.hourType + " " + this.minuteType + " " + this.secondType + " " + this.textType;
@@ -52,6 +53,12 @@ public class Gui extends Schedule implements ActionListener {
 	public String getTextType() {
 		return textType;
 	}
+	
+	public void loadSchedule() {
+		System.out.println("Loading...");
+		load.loadSchedule(list);
+	}
+	
 	public void guiMenu() {
 		guiMenuFrame = new JFrame("Menu");
 		add = new JButton("Add Schedule");
@@ -78,16 +85,15 @@ public class Gui extends Schedule implements ActionListener {
 		guiMenuFrame.add(p2, BorderLayout.CENTER);
 		guiMenuFrame.add(p3, BorderLayout.SOUTH);
 		
+		guiMenuFrame.setSize(300,200);
+		guiMenuFrame.setDefaultCloseOperation(guiMenuFrame.EXIT_ON_CLOSE);
+		guiMenuFrame.setVisible(true);
+		
 		add.addActionListener(this);
 		edit1.addActionListener(this);
 		del.addActionListener(this);
 		show.addActionListener(this);
 		exit.addActionListener(this);
-		
-		
-		guiMenuFrame.setSize(300,200);
-		guiMenuFrame.setDefaultCloseOperation(guiMenuFrame.EXIT_ON_CLOSE);
-		guiMenuFrame.setVisible(true);
 	}
 	
 	public void guiAddSchedule() {
@@ -139,11 +145,11 @@ public class Gui extends Schedule implements ActionListener {
 		guiAddFrame.add(p1, BorderLayout.CENTER);
 		guiAddFrame.add(p2, BorderLayout.SOUTH);
 		
-		save.addActionListener(this);
-		back1.addActionListener(this);
-		
 		guiAddFrame.setSize(500, 400);
 		guiAddFrame.setVisible(true);
+		
+		save.addActionListener(this);
+		back1.addActionListener(this);
 	}
 	
 	public void guiEditSchedule1() {
@@ -170,7 +176,7 @@ public class Gui extends Schedule implements ActionListener {
 			titlePanel.add(new JLabel("||"));
 			
 			guiEditFrame1.add(titlePanel, BorderLayout.SOUTH);
-		}
+		} //list에 저장된 모든 Title 정보를 Gui에 출력해주는 반복문
 		
 		guiEditFrame1.add(textPanel, BorderLayout.NORTH);
 		guiEditFrame1.add(editPanel, BorderLayout.CENTER);
@@ -234,10 +240,8 @@ public class Gui extends Schedule implements ActionListener {
 		guiEditFrame2.setSize(500, 400);
 		guiEditFrame2.setVisible(true);
 		
-		System.out.println(i);
-		
 		return this.i = i;
-	}
+	} //i값을 반환함으로써 배열의 몇 번째를 관리할 것인지 알게 된다
 	
 	public void guiDeleteSchedule1() {
 		guiDeleteFrame1 = new JFrame("Delete Schedules");
@@ -436,6 +440,8 @@ public class Gui extends Schedule implements ActionListener {
 			guiShowSchedule();
 		}
 		else if (e.getSource() == exit) {
+			System.out.println("Saving...");
+			load.saveSchedule(list);
 			System.exit(0);
 		}
 		else if (e.getSource() == save) {
@@ -518,4 +524,5 @@ public class Gui extends Schedule implements ActionListener {
 			guiDeleteFrame2.setVisible(false);
 		}
 	}
+
 }
